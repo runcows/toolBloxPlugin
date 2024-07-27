@@ -1,0 +1,4 @@
+name: toolBlox
+version: '1.0.0-SNAPSHOT'
+main: io.github.runcows.toolBlox.ToolBlox
+api-version: '1.21'
