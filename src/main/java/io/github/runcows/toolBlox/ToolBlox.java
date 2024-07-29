@@ -1,6 +1,11 @@
 package io.github.runcows.toolBlox;
 
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class ToolBlox extends JavaPlugin {
 
@@ -21,14 +26,41 @@ public final class ToolBlox extends JavaPlugin {
         // figure out right click detection, can we do any item before 1.21? or do we need the custom enchants?
         // im guessing we need to have an event for that
         // custom model data and textures: panic
-    @Override
-    public void onEnable() {
-        // Plugin startup logic
 
+    private static ToolBlox instance;
+    public FileConfiguration config;
+    public ToolBlox()
+    {
+        instance = this;
+    }
+    public static ToolBlox getInstance()
+    {
+        return instance;
     }
 
     @Override
-    public void onDisable() {
-        // Plugin shutdown logic
+    public void onEnable()
+    {
+        saveDefaultConfig();
+        config = this.getConfig();
+    }
+
+    @Override
+    public void onDisable()
+    {
+        saveConfig();
+    }
+
+    //this method's code is from Maxx_Qc on this thread (https://www.spigotmc.org/threads/use-hex-color-codes-in-clickable-message.476327/)
+    private static final Pattern HEX_PATTERN = Pattern.compile("&(#\\w{6})");
+    public static String hex(String str)
+    {
+        Matcher matcher = HEX_PATTERN.matcher(ChatColor.translateAlternateColorCodes('&', str));
+        StringBuffer buffer = new StringBuffer();
+
+        while (matcher.find())
+            matcher.appendReplacement(buffer, net.md_5.bungee.api.ChatColor.of(matcher.group(1)).toString());
+
+        return matcher.appendTail(buffer).toString();
     }
 }
