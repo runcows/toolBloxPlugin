@@ -98,9 +98,10 @@ public class InteractBlockListener implements Listener {
                 // Mode 2: Sideways Up Down
             }
 
-            case ACACIA_FENCE_GATE, BAMBOO_FENCE_GATE, BIRCH_FENCE_GATE, CHERRY_FENCE_GATE,
-                 CRIMSON_FENCE_GATE, DARK_OAK_FENCE_GATE, JUNGLE_FENCE_GATE, MANGROVE_FENCE_GATE,
-                 OAK_FENCE_GATE, SPRUCE_FENCE_GATE, WARPED_FENCE_GATE->
+            case ACACIA_FENCE_GATE, BAMBOO_FENCE_GATE, BIRCH_FENCE_GATE,
+                 CHERRY_FENCE_GATE, CRIMSON_FENCE_GATE, DARK_OAK_FENCE_GATE,
+                 JUNGLE_FENCE_GATE, MANGROVE_FENCE_GATE, OAK_FENCE_GATE,
+                 SPRUCE_FENCE_GATE, WARPED_FENCE_GATE->
             {// all fence gates
                 // Mode 1: facing4
                 // Mode 2: in_wall
