@@ -31,7 +31,7 @@ public class InteractBlockListener implements Listener {
         ItemStack item = event.getItem();
         if(
                 item.getType() == Material.CARROT_ON_A_STICK
-                && item.getItemMeta().getCustomModelData() == 179932
+                && item.getItemMeta().getCustomModelData() == config.getInt("wrenchCustomModelData")
                 && item.containsEnchantment(Enchantment.LURE)
         )
         {// Wrench

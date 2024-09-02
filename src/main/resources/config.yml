@@ -2,3 +2,7 @@
 ##     ToolBlox Config     ##
 #############################
 
+wrenchDisplayName: "&bWrench"
+wrenchLore: ["Right Click to rotate","Left Click to change modes"]
+wrenchCustomModelData: 179932
+wrenchMaterial: "COPPER_INGOT"
