@@ -43,6 +43,7 @@ public final class ToolBlox extends JavaPlugin {
     {
         saveDefaultConfig();
         config = this.getConfig();
+        getServer().getPluginManager().registerEvents(new InteractBlockListener(), this);
     }
 
     @Override
