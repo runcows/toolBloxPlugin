@@ -1,10 +1,15 @@
 package io.github.runcows.toolBlox;
 
+import org.bukkit.Axis;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.ShulkerBox;
+import org.bukkit.block.data.Attachable;
+import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.Orientable;
+import org.bukkit.block.data.type.Crafter;
 import org.bukkit.block.data.type.Piston;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
@@ -138,6 +143,10 @@ public class InteractBlockListener implements Listener {
                  OCHRE_FROGLIGHT, PEARLESCENT_FROGLIGHT, VERDANT_FROGLIGHT->
             {// all axis flip blocks
                 // axis flip
+                if (!axisRotate3(clickedBlock))
+                {
+                    //something wrong
+                }
             }
             case ACACIA_TRAPDOOR, BAMBOO_TRAPDOOR, BIRCH_TRAPDOOR, CHERRY_TRAPDOOR,
                  COPPER_TRAPDOOR, CRIMSON_TRAPDOOR, DARK_OAK_TRAPDOOR,
@@ -193,6 +202,10 @@ public class InteractBlockListener implements Listener {
             {// all slabs
                 // make sure type isnt double
                 // type swap (bottom top)
+                if(!halfSwap(clickedBlock))
+                {
+                    //something wrong
+                }
             }
             case STONE_BRICK_STAIRS, STONE_STAIRS, ACACIA_STAIRS, ANDESITE_STAIRS,
                  BAMBOO_MOSAIC_STAIRS, BAMBOO_STAIRS, BIRCH_STAIRS, BLACKSTONE_STAIRS,
@@ -451,15 +464,189 @@ public class InteractBlockListener implements Listener {
         }
         return true;
     }
+    private boolean axisRotate3 (Block clickedBlock)
+    {
+        Orientable block = (Orientable) clickedBlock;
+        Axis axis = block.getAxis();
+        switch (axis)
+        {
+            case Z ->
+            {
+                block.setAxis(Axis.X);
+            }
+            case X ->
+            {
+                block.setAxis(Axis.Y);
+            }
+            case Y ->
+            {
+                block.setAxis(Axis.Z);
+            }
+            default ->
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    private boolean halfSwap (Block clickedBlock)
+    {
+        Bisected block = (Bisected) clickedBlock;
+        Bisected.Half half = block.getHalf();
+        switch (half)
+        {
+            case TOP ->
+            {
+                block.setHalf(Bisected.Half.BOTTOM);
+            }
+            case BOTTOM ->
+            {
+                block.setHalf(Bisected.Half.TOP);
+            }
+            default ->
+            {
+                return false;
+            }
+        }
+        return  true;
+    }
+    private boolean attachedSwap (Block clickedBlock)
+    {
+        Attachable block = (Attachable) clickedBlock;
+        if (block.isAttached())
+        {
+            block.setAttached(false);
+        }
+        else
+        {//can isAttached return null? Probably not?
+            block.setAttached(true);
+        }
+        // return true???? is there no false?
+        return true;
+    }
+    private boolean crafterVertical (Block clickedBlock)
+    {
+        Crafter block = (Crafter) clickedBlock;
+        Crafter.Orientation orientation = block.getOrientation();
+        // need to make decisions on how this works
+        // does it do 4 rotations around, which switches horizontal halfway? <----- This one
+        // does it just do up down out?
+        switch (orientation)
+        {
+            // Loop 1
+            case EAST_UP ->
+            {
+                block.setOrientation(Crafter.Orientation.UP_EAST);
+            }
+            case UP_EAST, UP_WEST ->
+            {
+                block.setOrientation(Crafter.Orientation.WEST_UP);
+            }
+            case WEST_UP ->
+            {
+                block.setOrientation(Crafter.Orientation.DOWN_WEST);
+            }
+            case DOWN_WEST, DOWN_EAST ->
+            {
+                block.setOrientation(Crafter.Orientation.EAST_UP);
+            }
+            // Loop 2
+            case NORTH_UP ->
+            {
+                block.setOrientation(Crafter.Orientation.UP_NORTH);
+            }
+            case UP_NORTH, UP_SOUTH ->
+            {
+                block.setOrientation(Crafter.Orientation.SOUTH_UP);
+            }
+            case SOUTH_UP ->
+            {
+                block.setOrientation(Crafter.Orientation.DOWN_SOUTH);
+            }
+            case DOWN_SOUTH, DOWN_NORTH ->
+            {
+                block.setOrientation(Crafter.Orientation.NORTH_UP);
+            }
+            /////////////////////////
+            default ->
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    private boolean crafterHorizontal (Block clickedBlock)
+    {
+        Crafter block = (Crafter) clickedBlock;
+        Crafter.Orientation orientation = block.getOrientation();
+        // this one's not bad
+        switch (orientation)
+        {
+            case UP_EAST ->
+            {
+                block.setOrientation(Crafter.Orientation.UP_SOUTH);
+            }
+            case UP_SOUTH ->
+            {
+                block.setOrientation(Crafter.Orientation.UP_WEST);
+            }
+            case UP_WEST ->
+            {
+                block.setOrientation(Crafter.Orientation.UP_NORTH);
+            }
+            case UP_NORTH ->
+            {
+                block.setOrientation(Crafter.Orientation.UP_EAST);
+            }
+            ////////////////////////////////////////////////////////////
+            case DOWN_EAST ->
+            {
+                block.setOrientation(Crafter.Orientation.DOWN_SOUTH);
+            }
+            case DOWN_SOUTH ->
+            {
+                block.setOrientation(Crafter.Orientation.DOWN_WEST);
+            }
+            case DOWN_WEST ->
+            {
+                block.setOrientation(Crafter.Orientation.DOWN_NORTH);
+            }
+            case DOWN_NORTH ->
+            {
+                block.setOrientation(Crafter.Orientation.DOWN_EAST);
+            }
+            ///////////////////////////////////////////////////////////
+            case EAST_UP ->
+            {
+                block.setOrientation(Crafter.Orientation.SOUTH_UP);
+            }
+            case SOUTH_UP ->
+            {
+                block.setOrientation(Crafter.Orientation.WEST_UP);
+            }
+            case WEST_UP ->
+            {
+                block.setOrientation(Crafter.Orientation.NORTH_UP);
+            }
+            case NORTH_UP ->
+            {
+                block.setOrientation(Crafter.Orientation.EAST_UP);
+            }
+            ////////////////////////////////////////////////////////
+            default ->
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     private void onHoseUse(PlayerInteractEvent event, ItemStack item)
     {
         config = plugin.getConfig();
         Player player = event.getPlayer();
         Block clickedBlock = event.getClickedBlock();
-        //if(clickedBlock.getType().equals(Material.CRAFTER))
-        //{
 
-        //}
     }
 }
