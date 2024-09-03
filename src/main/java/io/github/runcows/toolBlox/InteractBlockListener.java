@@ -27,8 +27,13 @@ public class InteractBlockListener implements Listener {
     @EventHandler
     public void onInteractWithBlock (PlayerInteractEvent event)
     {
+        config = plugin.getConfig();
         //first check should be items, then split or return
         ItemStack item = event.getItem();
+        if(item == null)
+        {
+            return;
+        }
         if(
                 item.getType() == Material.CARROT_ON_A_STICK
                 && item.getItemMeta().getCustomModelData() == config.getInt("wrenchCustomModelData")
@@ -72,7 +77,7 @@ public class InteractBlockListener implements Listener {
                  WHITE_SHULKER_BOX, YELLOW_SHULKER_BOX, LIGHT_GRAY_SHULKER_BOX ->
             {// Shulkers
                 // need to check if open? is that possible? rotate if not
-                ShulkerBox shulker = (ShulkerBox) clickedBlock.getBlockData();
+                ShulkerBox shulker = (ShulkerBox) clickedBlock.getState().getBlockData();
                 if (shulker.getInventory().getViewers().isEmpty())
                 {
                     //rotate
@@ -85,7 +90,7 @@ public class InteractBlockListener implements Listener {
             case PISTON, STICKY_PISTON ->
             {// Pistons
                 // need to check if extended, then rotate if not
-                Piston piston = (Piston) clickedBlock.getBlockData();
+                Piston piston = (Piston) clickedBlock.getState().getBlockData();
                 if (!piston.isExtended())
                 {
                     //rotate
@@ -367,7 +372,7 @@ public class InteractBlockListener implements Listener {
     }
     private boolean rotateFacing4 (Block clickedBlock)
     {
-        Directional block = (Directional) clickedBlock;
+        Directional block = (Directional) clickedBlock.getState().getData();
         BlockFace facing = block.getFacing();
         switch (facing)
         {
@@ -396,7 +401,7 @@ public class InteractBlockListener implements Listener {
     }
     private boolean rotateFacing5 (Block clickedBlock)
     {
-        Directional block = (Directional) clickedBlock;
+        Directional block = (Directional) clickedBlock.getState().getData();
         BlockFace facing = block.getFacing();
         switch (facing)
         {
@@ -429,7 +434,7 @@ public class InteractBlockListener implements Listener {
     }
     private boolean rotateFacing6 (Block clickedBlock)
     {
-        Directional block = (Directional) clickedBlock;
+        Directional block = (Directional) clickedBlock.getState().getData();
         BlockFace facing = block.getFacing();
         switch (facing)
         {
@@ -466,7 +471,7 @@ public class InteractBlockListener implements Listener {
     }
     private boolean axisRotate3 (Block clickedBlock)
     {
-        Orientable block = (Orientable) clickedBlock;
+        Orientable block = (Orientable) clickedBlock.getState().getData();
         Axis axis = block.getAxis();
         switch (axis)
         {
@@ -491,7 +496,7 @@ public class InteractBlockListener implements Listener {
     }
     private boolean halfSwap (Block clickedBlock)
     {
-        Bisected block = (Bisected) clickedBlock;
+        Bisected block = (Bisected) clickedBlock.getState().getData();
         Bisected.Half half = block.getHalf();
         switch (half)
         {
@@ -512,7 +517,7 @@ public class InteractBlockListener implements Listener {
     }
     private boolean attachedSwap (Block clickedBlock)
     {
-        Attachable block = (Attachable) clickedBlock;
+        Attachable block = (Attachable) clickedBlock.getState().getData();
         if (block.isAttached())
         {
             block.setAttached(false);
@@ -526,7 +531,7 @@ public class InteractBlockListener implements Listener {
     }
     private boolean crafterVertical (Block clickedBlock)
     {
-        Crafter block = (Crafter) clickedBlock;
+        Crafter block = (Crafter) clickedBlock.getState().getData();
         Crafter.Orientation orientation = block.getOrientation();
         // need to make decisions on how this works
         // does it do 4 rotations around, which switches horizontal halfway? <----- This one
@@ -577,7 +582,7 @@ public class InteractBlockListener implements Listener {
     }
     private boolean crafterHorizontal (Block clickedBlock)
     {
-        Crafter block = (Crafter) clickedBlock;
+        Crafter block = (Crafter) clickedBlock.getState().getData();
         Crafter.Orientation orientation = block.getOrientation();
         // this one's not bad
         switch (orientation)

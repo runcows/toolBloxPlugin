@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -86,8 +87,9 @@ public final class ToolBlox extends JavaPlugin {
         wrenchMeta.setCustomModelData(config.getInt("wrenchCustomModelData"));
         wrenchMeta.setDisplayName(hex(config.getString("wrenchDisplayName")));
         wrenchMeta.setLore(config.getStringList("wrenchLore"));
+        wrenchMeta.addEnchant(Enchantment.LURE,1,true);
+        wrenchMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         wrench.setItemMeta(wrenchMeta);
-        wrench.addEnchantment(Enchantment.LURE,1);
         NamespacedKey wrenchKey = new NamespacedKey(this, "wrench");
         this.wrenchNamespacedKey = wrenchKey;
         ShapedRecipe wrenchRecipe = new ShapedRecipe(wrenchKey, wrench);
