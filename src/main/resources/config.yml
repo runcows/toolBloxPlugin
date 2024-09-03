@@ -6,3 +6,8 @@ wrenchDisplayName: "&bWrench"
 wrenchLore: ["Right Click to rotate","Left Click to change modes"]
 wrenchCustomModelData: 179932
 wrenchMaterial: "COPPER_INGOT"
+
+#hoseDisplayName: "&bHose"
+#hoseLore: ["Right Click to AAAAAA","Left Click to BBBBBB"]
+#hoseCustomModelData: 179933
+#hoseMaterial: "COPPER_INGOT"
