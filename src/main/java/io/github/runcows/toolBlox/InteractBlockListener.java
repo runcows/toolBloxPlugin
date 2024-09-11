@@ -19,6 +19,61 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+/*
+DIRECTIONAL INTERFACE
+    AmethystCluster,
+    Barrel,
+    Bed,
+    Beehive,
+    Bell,
+    BigDripleaf,
+    CalibratedSculkSensor,
+    Campfire,
+    Chest,
+    ChiseledBookshelf,
+    Cocoa,
+    CommandBlock,
+    Comparator,
+    CoralWallFan,
+    DecoratedPot,
+    Dispenser,
+    Door,
+    Dripleaf,
+    EnderChest,
+    EndPortalFrame,
+    Furnace,
+    Gate,
+    Grindstone,
+    Hopper,
+    Ladder,
+    Lectern,
+    LightningRod,
+    Observer,
+    PinkPetals,
+    Piston,
+    PistonHead,
+    RedstoneWallTorch,
+    Repeater,
+    SmallDripleaf,
+    Stairs,
+    Switch,
+    TechnicalPiston,
+    TrapDoor,
+    TripwireHook,
+    Vault,
+    WallHangingSign,
+    WallSign,
+    WallSkull
+
+
+ */
+
+
+
+//Maybe i try to decompile the old wrench plugin...
+
+
+
 
 public class InteractBlockListener implements Listener {
     ToolBlox plugin = ToolBlox.getInstance();
